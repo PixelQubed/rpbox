@@ -35,11 +35,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\gamemode_testing\\code\\gamemode_testing.csproj",
-      "projectName": "gamemode_testing",
-      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\gamemode_testing\\code\\gamemode_testing.csproj",
+      "projectUniqueName": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_gamemode_test\\code\\sbox_gamemode_test.csproj",
+      "projectName": "sbox_gamemode_test",
+      "projectPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_gamemode_test\\code\\sbox_gamemode_test.csproj",
       "packagesPath": "C:\\Users\\PixelQubed\\.nuget\\packages\\",
-      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\gamemode_testing\\code\\obj\\",
+      "outputPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_gamemode_test\\code\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

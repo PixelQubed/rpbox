@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KVc822dLRm15BBDY6dSymchimaEvp0veqVj32tYdL1fxFw1H/+/n+K15LdCZqHBEHINhYFhVRQeWwaDAN/gpzQ==",
+  "dgSpecHash": "OEu1/FV0xYLnriLIqN9ASSAJt4EZl514jvhT901ztQ2qMtt0nARK8IuADcKy2smNNghAlJl98hh0MVoWCod5wQ==",
   "success": true,
-  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\gamemode_testing\\code\\gamemode_testing.csproj",
+  "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\sbox\\Addons\\sbox_gamemode_test\\code\\sbox_gamemode_test.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
