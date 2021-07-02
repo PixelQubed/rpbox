@@ -1,11 +1,13 @@
 using Sandbox;
 using System;
 using System.Linq;
+using SBoxGamemodeTest.GMD;
 
 namespace SBoxGamemodeTest
 {
 	partial class GamePlayer : Player
 	{
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -30,7 +32,9 @@ namespace SBoxGamemodeTest
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
+
 			base.Respawn();
+			
 		}
 
 		/// <summary>
@@ -38,8 +42,11 @@ namespace SBoxGamemodeTest
 		/// </summary>
 		public override void Simulate( Client cl )
 		{
-			base.Simulate( cl );
 
+			Debugger.Invoke( GroundEntity );
+
+			base.Simulate( cl );
+			
 			//
 			// If you have active children (like a weapon etc) you should call this to 
 			// simulate those too.
@@ -49,15 +56,6 @@ namespace SBoxGamemodeTest
 			//
 			// If we're running serverside and Attack1 was just pressed, spawn a ragdoll
 			//
-			if ( IsServer && Input.Pressed( InputButton.Attack1 ) )
-			{
-
-			}
-
-			if ( IsServer && Input.Pressed( InputButton.Attack2 ) )
-			{
-
-			}
 		}
 
 		public override void OnKilled()
