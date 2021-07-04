@@ -8,34 +8,38 @@ namespace SBoxGamemodeTest.GMD
     public class Debugger
     {
 		public const bool debugEnabled = true;
+		private static bool inAir = false;
+		private static bool isJumping = false;
+		private static bool isForward = false;
+		private static bool isBack = false;
+		private static bool isLeft = false;
+		private static bool isRight = false;
 
-		public static void Invoke( object GroundEntity )
+		public static void Invoke( Entity GroundEntity )
 		{
-			if ( Debugger.debugEnabled == true ) { Debugger.Debug( GroundEntity ); }
+			if ( Debugger.debugEnabled == true )
+			{
+				inAir = GroundEntity == null;
+				isJumping = Input.Down( InputButton.Jump );
+				isForward = Input.Down( InputButton.Forward );
+				isBack = Input.Down( InputButton.Back );
+				isLeft = Input.Down( InputButton.Left );
+				isRight = Input.Down( InputButton.Right );
+				Debugger.Debug();
+			}
 		}
 
-		public static void Debug( object GroundEntity )
+		public static void Debug()
 		{
-			bool[] movementPropsBools = new bool[6];
+			// Dont need the array and its slow to use new as it needs to ask for the memory and then wait to recieve it.
+			// bool[] movementPropBools = new bool[6]
 
-			if ( GroundEntity == null ) {movementPropsBools[0] = true;}
-			DebugOverlay.ScreenText(0, $"InAir = {movementPropsBools[0]}", 0f );
-
-			if ( Input.Down( InputButton.Jump ) ) {movementPropsBools[1] = true;}
-			DebugOverlay.ScreenText(1, $"Jump = {movementPropsBools[1]}", 0f );
-
-			if ( Input.Down( InputButton.Forward ) ) {movementPropsBools[2] = true;}
-			DebugOverlay.ScreenText(2, $"Forward = {movementPropsBools[2]}", 0f );
-
-			if ( Input.Down( InputButton.Back ) ) {movementPropsBools[3] = true;}
-			DebugOverlay.ScreenText(3, $"Back = {movementPropsBools[3]}", 0f );
-
-			if ( Input.Down( InputButton.Left ) ) {movementPropsBools[4] = true;}
-			DebugOverlay.ScreenText(4, $"Left = {movementPropsBools[4]}", 0f );
-
-			if ( Input.Down( InputButton.Right ) ) {movementPropsBools[5] = true;}
-			DebugOverlay.ScreenText(5, $"Right = {movementPropsBools[5]}", 0f );
-
+			DebugOverlay.ScreenText(0, $"InAir = {inAir}", 0f);
+			DebugOverlay.ScreenText(1, $"Jump = {isJumping}", 0f);
+			DebugOverlay.ScreenText(2, $"Forward = {isForward}", 0f);
+			DebugOverlay.ScreenText(3, $"Back = {isBack}", 0f);
+			DebugOverlay.ScreenText(4, $"Left = {isLeft}", 0f);
+			DebugOverlay.ScreenText(5, $"Right = {isRight}", 0f);
 		}
 
     }

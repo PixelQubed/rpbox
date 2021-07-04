@@ -25,6 +25,9 @@ namespace SBoxGamemodeTest
 			if ( IsServer )
 			{
 				Log.Info( "My Gamemode Has Created Serverside!" );
+
+				// Create Hud
+				new UI.TestHud();
 			}
 
 			if ( IsClient )
