@@ -5,6 +5,8 @@ namespace SBoxGamemodeTest.Pawns
 {
 	partial class GamePlayer : Player
 	{
+		DamageInfo damageInfo;
+		Vector3 velocityOldTick;
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -53,6 +55,20 @@ namespace SBoxGamemodeTest.Pawns
 			//
 			// If we're running serverside and Attack1 was just pressed, spawn a ragdoll
 			//
+			if (Velocity.z < -400 && GroundEntity == null && !Controller.HasTag("noclip")) {
+				damageInfo.Damage = Math.Abs(Velocity.y / 20);
+				damageInfo.Body = PhysicsBody;
+				
+			}
+
+			if (Controller.HasTag("noclip")) {
+				damageInfo.Damage = 0;
+			}
+
+			if (damageInfo.Damage > 0 && GroundEntity != null) {
+				TakeDamage(damageInfo);
+				damageInfo.Damage = 0;
+			}
 		}
 
 		public override void OnKilled()
