@@ -11,6 +11,10 @@ namespace SBoxGamemodeTest.UI
         private float mValue;
         private float TimeElapsed;
         private float StartValue;
+        private bool Testing = false;
+        private float valTest = 100;
+
+        private float duartion = .5f;
         public float PercentValue
         {
             get { return mValue; }
@@ -20,30 +24,47 @@ namespace SBoxGamemodeTest.UI
         public ProgressBar()
         {
             mValue = 100;
+            valTest = 100;
             Bar = Add.Panel("bar");
+            Bar.Style.Width = Length.Percent(1);
         }
 
         public override void Tick()
         {
+            if (Testing) {
+				if (valTest == 1 && valTest.CompareTo(Bar.Style.Width.Value.Value) == 0)
+                    valTest = 100;
+                
+                if (valTest == 100 && valTest.CompareTo(Bar.Style.Width.Value.Value) == 0)
+                    valTest = 1;
+                
+                duartion = 3f;
+                mValue = valTest;
+            }
+
             float val = mValue;
             if (Bar.Style.Width.Value.Value != mValue) {
-                if (StartValue < 0) {
+                if (StartValue == -1) {
                     StartValue = Bar.Style.Width.Value.Value;
                     TimeElapsed = 0;
                 }
-                
-                if (TimeElapsed > 3) {
+
+                float t = TimeElapsed / duartion;
+                t = t * t * (3f - 1f * t);
+
+                if (t > 1) {
+                    t = 1;
+                    TimeElapsed = 0;
+                } else if (t < 0) {
+                    t = 0;
                     TimeElapsed = 0;
                 }
 
-                float t = TimeElapsed / .5f;
-                t = t * t * (3f - 1f * t);
-
-                if (t > 1)
-                    t = 1;
-
                 val = MathX.LerpTo(StartValue, mValue, t);
                 TimeElapsed += Time.Delta;
+                if (t == 1) {
+                    StartValue = -1;
+                }
             } else {
                 StartValue = -1;
             }
