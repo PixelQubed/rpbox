@@ -7,22 +7,26 @@ namespace SBoxGamemodeTest.UI
     public class Health : Panel
     {
         public Label HealthText;
+        public Panel Wrapper;
         public ProgressBar ProgressBar;
 
         public Health()
         {
-            ProgressBar = new ProgressBar(100);
-            Add.Label("🩸", "icon");
-            HealthText = Add.Label("100", "value");
+            ProgressBar = AddChild<ProgressBar>("progressBar");
+            Wrapper = Add.Panel("wrapper");
+            Wrapper.Add.Label("🩸", "icon");
+            HealthText = Wrapper.Add.Label("100", "value");
         }
 
         public override void Tick()
         {
+            base.Tick();
             var player = Local.Pawn;
             if (player == null) return;
 
             HealthText.Text = $"{player.Health:n0}";
-            ProgressBar.Style.Width = Length.Percent(player.Health);
+
+            ProgressBar.PercentValue = player.Health;
         }
     }
 }
