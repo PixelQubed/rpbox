@@ -1,4 +1,4 @@
-﻿Health {
+Health {
     position: absolute;
     background-color: rgba( black, 0.5 );
     border-radius: 50%;
@@ -63,13 +63,14 @@ Armor {
 }
 
 ProgressBar {
-    position: relative;
-    border-radius: 1000px;
     height: 100%;
     width: 100%;
-    max-width: 100%;
-    min-width: 0px;
-    top: 0;
-    left: 0;
-    background-color: rgba(red, 1);
+
+    .bar {
+        border-radius: 50px;
+        height: 100%;
+        max-width: 100%;
+        min-width: 0px;
+        background-color: rgba(255, 32, 32, 0.5);
+    }
 }
