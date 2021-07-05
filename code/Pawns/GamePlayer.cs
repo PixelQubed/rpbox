@@ -1,13 +1,10 @@
 using Sandbox;
 using System;
-using System.Linq;
-using SBoxGamemodeTest.GMD;
 
-namespace SBoxGamemodeTest
+namespace SBoxGamemodeTest.Pawns
 {
 	partial class GamePlayer : Player
 	{
-
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -43,7 +40,7 @@ namespace SBoxGamemodeTest
 		public override void Simulate( Client cl )
 		{
 
-			Debugger.Invoke( GroundEntity );
+			Debug.MovementDebugger.Invoke( GroundEntity );
 
 			base.Simulate( cl );
 			

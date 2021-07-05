@@ -2,10 +2,10 @@ using System;
 using System.Reflection;
 using Sandbox;
 
-namespace SBoxGamemodeTest.GMD
+namespace SBoxGamemodeTest.Debug
 {	
 	
-    public class Debugger
+    public class MovementDebugger
     {
 		public const bool debugEnabled = true;
 		private static bool inAir = false;
@@ -17,7 +17,7 @@ namespace SBoxGamemodeTest.GMD
 
 		public static void Invoke( Entity GroundEntity )
 		{
-			if ( Debugger.debugEnabled == true )
+			if ( MovementDebugger.debugEnabled == true )
 			{
 				inAir = GroundEntity == null;
 				isJumping = Input.Down( InputButton.Jump );
@@ -25,7 +25,7 @@ namespace SBoxGamemodeTest.GMD
 				isBack = Input.Down( InputButton.Back );
 				isLeft = Input.Down( InputButton.Left );
 				isRight = Input.Down( InputButton.Right );
-				Debugger.Debug();
+				MovementDebugger.Debug();
 			}
 		}
 

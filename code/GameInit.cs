@@ -45,7 +45,7 @@ namespace SBoxGamemodeTest
 		{
 			base.ClientJoined( client );
 
-			var player = new GamePlayer();
+			var player = new Pawns.GamePlayer();
 			client.Pawn = player;
 
 			player.Respawn();
