@@ -1,0 +1,12 @@
+ProgressBar {
+    height: 100%;
+    width: 100%;
+
+    .bar {
+        border-radius: 50px;
+        height: 100%;
+        max-width: 100%;
+        min-width: 0px;
+        background-color: rgba(255, 32, 32, 0.5);
+    }
+}
