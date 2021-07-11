@@ -3,9 +3,8 @@ using System.Reflection;
 using Sandbox;
 
 namespace RPGamemode.Debug
-{	
-	
-    public class MovementDebugger
+{
+    public static class MovementDebugger
     {
 		public const bool debugEnabled = true;
 		private static bool inAir = false;
@@ -17,7 +16,7 @@ namespace RPGamemode.Debug
 
 		public static void Invoke( Entity GroundEntity )
 		{
-			if ( MovementDebugger.debugEnabled == true )
+			if ( MovementDebugger.debugEnabled )
 			{
 				inAir = GroundEntity == null;
 				isJumping = Input.Down( InputButton.Jump );
