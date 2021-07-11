@@ -4,7 +4,7 @@ using Sandbox.UI.Construct;
 
 namespace RPGamemode.UI
 {
-    public class Health : Panel
+    public partial class Health : Panel
     {
         public Label HealthText;
         public Panel Wrapper;
@@ -12,6 +12,7 @@ namespace RPGamemode.UI
 
         public Health()
         {
+			StyleSheet.Load("/UI/Styles/Health.scss");
             ProgressBar = AddChild<ProgressBar>("progressBar");
             Wrapper = Add.Panel("wrapper");
             Wrapper.Add.Label("🩸", "icon");

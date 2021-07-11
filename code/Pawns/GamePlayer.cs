@@ -6,7 +6,11 @@ namespace RPGamemode.Pawns
 	partial class GamePlayer : Player
 	{
 		DamageInfo damageInfo;
-		Vector3 velocityOldTick;
+
+		public GamePlayer()
+		{
+		}
+
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -24,7 +28,7 @@ namespace RPGamemode.Pawns
 			//
 			// Use ThirdPersonCamera (you can make your own Camera for 100% control)
 			//
-			Camera = new ThirdPersonCamera();
+			Camera = new FirstPersonCamera();
 
 			EnableAllCollisions = true;
 			EnableDrawing = true;
@@ -52,22 +56,18 @@ namespace RPGamemode.Pawns
 			//
 			SimulateActiveChild( cl, ActiveChild );
 
-			//
-			// If we're running serverside and Attack1 was just pressed, spawn a ragdoll
-			//
-			if (Velocity.z < -400 && GroundEntity == null && !Controller.HasTag("noclip")) {
-				damageInfo.Damage = Math.Abs(Velocity.y / 20);
-				damageInfo.Body = PhysicsBody;
-				
-			}
+			if (IsServer) {
+				if (Velocity.z < -600 && GroundEntity == null && !Controller.HasTag("noclip")) {
+					damageInfo.Damage = Math.Abs(Velocity.y / 15);
+					damageInfo.Body = PhysicsBody;
+				} else if (Velocity.z > 0 || Controller.HasTag("noclip")) {
+					damageInfo.Damage = 0;
+				}
 
-			if (Controller.HasTag("noclip")) {
-				damageInfo.Damage = 0;
-			}
-
-			if (damageInfo.Damage > 0 && GroundEntity != null) {
-				TakeDamage(damageInfo);
-				damageInfo.Damage = 0;
+				if (damageInfo.Damage > 0 && GroundEntity != null) {
+					TakeDamage(damageInfo);
+					damageInfo.Damage = 0;
+				}
 			}
 		}
 

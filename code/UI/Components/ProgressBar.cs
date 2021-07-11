@@ -23,6 +23,7 @@ namespace RPGamemode.UI
 
         public ProgressBar()
         {
+			StyleSheet.Load("/UI/Styles/ProgressBar.scss");
             mValue = 100;
             valTest = 100;
             Bar = Add.Panel("bar");
