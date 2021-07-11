@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Sandbox;
 
-namespace SBoxGamemodeTest.Debug
+namespace RPGamemode.Debug
 {	
 	
     public class MovementDebugger

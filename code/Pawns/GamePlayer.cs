@@ -1,7 +1,7 @@
 using Sandbox;
 using System;
 
-namespace SBoxGamemodeTest.Pawns
+namespace RPGamemode.Pawns
 {
 	partial class GamePlayer : Player
 	{

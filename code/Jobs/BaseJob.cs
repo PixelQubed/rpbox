@@ -1,7 +1,7 @@
 using Sandbox;
 using System.Collections;
 
-namespace SBoxGamemodeTest.Jobs
+namespace RPGamemode.Jobs
 {
     public class Base
     {

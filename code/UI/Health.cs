@@ -2,7 +2,7 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-namespace SBoxGamemodeTest.UI
+namespace RPGamemode.UI
 {
     public class Health : Panel
     {

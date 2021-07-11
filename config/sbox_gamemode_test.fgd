@@ -1,5 +1,5 @@
 // 
-// SBoxGamemodeTest.SBoxGamemodeTest : Sandbox.Game 
+// RPGamemode.RPGame : Sandbox.Game 
 // 
 @PointClass = game : ""
 [

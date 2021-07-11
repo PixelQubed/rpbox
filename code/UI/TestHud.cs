@@ -1,7 +1,7 @@
-﻿using Sandbox;
+using Sandbox;
 using Sandbox.UI;
 
-namespace SBoxGamemodeTest.UI
+namespace RPGamemode.UI
 {
 	public partial class TestHud : HudEntity<RootPanel>
 	{
