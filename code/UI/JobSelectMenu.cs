@@ -9,8 +9,7 @@ namespace RPGamemode.UI
 	[Library]
 	public partial class JobSelectMenu : Panel
 	{
-		public static JobSelectMenu Instance;
-		VirtualScrollPanel Overview;
+		private readonly VirtualScrollPanel Overview;
 		public JobSelectMenu()
 		{
 			Instance = this;
@@ -25,7 +24,7 @@ namespace RPGamemode.UI
 					jobsPage.AddClass("page");
 					jobsPage.SetClass("active", true);
 
-					List<Jobs.Base> jobs = new List<Jobs.Base>();
+					List<Jobs.Base> jobs = new();
 
 					if (RPGame.Instance.Jobs != null)
 					{
@@ -57,7 +56,6 @@ namespace RPGamemode.UI
 
 					var information = jobsPage.Add.Panel("jobs-overview");
 					{
-						
 					}
 				}
 
@@ -70,12 +68,12 @@ namespace RPGamemode.UI
 				{
 					var tabs = body.AddChild<ButtonGroup>();
 					tabs.AddClass("tabs");
-					tabs.SelectedButton = tabs.AddButtonActive("Jobs", (b) => {
-						jobsPage.SetClass("active", b);
-					});
+					tabs.SelectedButton = tabs.AddButtonActive("Jobs", (b) => jobsPage.SetClass("active", b));
 				}
 			}
 		}
+
+		public static JobSelectMenu Instance { get; set; }
 
 		public override void Tick()
 		{
@@ -100,7 +98,6 @@ namespace RPGamemode.UI
 				return;
 			}
 
-			
 			foreach (var job in RPGame.Instance.Jobs)
 			{
 				Overview.AddItem(job);

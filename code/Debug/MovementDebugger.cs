@@ -40,6 +40,5 @@ namespace RPGamemode.Debug
 			DebugOverlay.ScreenText(4, $"Left = {isLeft}", 0f);
 			DebugOverlay.ScreenText(5, $"Right = {isRight}", 0f);
 		}
-
     }
 }

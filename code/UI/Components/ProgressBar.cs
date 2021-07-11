@@ -11,14 +11,14 @@ namespace RPGamemode.UI
         private float mValue;
         private float TimeElapsed;
         private float StartValue;
-        private bool Testing = false;
+        private readonly bool Testing = false;
         private float valTest = 100;
 
         private float duartion = .5f;
-        public float PercentValue
-        {
+		public float PercentValue
+		{
             get { return mValue; }
-            set { mValue = MathX.Clamp(value, 1, 100); }
+            set { mValue = value.Clamp(1, 100); }
         }
 
         public ProgressBar()
@@ -35,10 +35,10 @@ namespace RPGamemode.UI
             if (Testing) {
 				if (valTest == 1 && valTest.CompareTo(Bar.Style.Width.Value.Value) == 0)
                     valTest = 100;
-                
+
                 if (valTest == 100 && valTest.CompareTo(Bar.Style.Width.Value.Value) == 0)
                     valTest = 1;
-                
+
                 duartion = 3f;
                 mValue = valTest;
             }
@@ -51,7 +51,7 @@ namespace RPGamemode.UI
                 }
 
                 float t = TimeElapsed / duartion;
-                t = t * t * (3f - 1f * t);
+                t = t * t * (3f - (1f * t));
 
                 if (t > 1) {
                     t = 1;
@@ -61,7 +61,7 @@ namespace RPGamemode.UI
                     TimeElapsed = 0;
                 }
 
-                val = MathX.LerpTo(StartValue, mValue, t);
+                val = StartValue.LerpTo(mValue, t);
                 TimeElapsed += Time.Delta;
                 if (t == 1) {
                     StartValue = -1;

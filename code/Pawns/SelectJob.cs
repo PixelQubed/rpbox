@@ -3,7 +3,7 @@ using System;
 
 namespace RPGamemode.Pawns
 {
-	partial class SelectJob : Player
+	internal partial class SelectJob : Player
 	{
 		public override void Respawn()
 		{
@@ -22,13 +22,11 @@ namespace RPGamemode.Pawns
 		/// </summary>
 		public override void Simulate( Client cl )
 		{
-
 			Debug.MovementDebugger.Invoke( GroundEntity );
 
 			base.Simulate( cl );
-			
 			//
-			// If you have active children (like a weapon etc) you should call this to 
+			// If you have active children (like a weapon etc) you should call this to
 			// simulate those too.
 			//
 			SimulateActiveChild( cl, ActiveChild );

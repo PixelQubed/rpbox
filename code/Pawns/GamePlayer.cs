@@ -3,9 +3,9 @@ using System;
 
 namespace RPGamemode.Pawns
 {
-	partial class GamePlayer : Player
+	internal partial class GamePlayer : Player
 	{
-		DamageInfo damageInfo;
+		private DamageInfo damageInfo;
 
 		public GamePlayer()
 		{
@@ -35,9 +35,7 @@ namespace RPGamemode.Pawns
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
-
 			base.Respawn();
-			
 		}
 
 		/// <summary>
@@ -45,13 +43,12 @@ namespace RPGamemode.Pawns
 		/// </summary>
 		public override void Simulate( Client cl )
 		{
-
 			Debug.MovementDebugger.Invoke( GroundEntity );
 
 			base.Simulate( cl );
-			
+
 			//
-			// If you have active children (like a weapon etc) you should call this to 
+			// If you have active children (like a weapon etc) you should call this to
 			// simulate those too.
 			//
 			SimulateActiveChild( cl, ActiveChild );

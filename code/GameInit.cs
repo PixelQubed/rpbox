@@ -9,19 +9,22 @@ namespace RPGamemode
 {
 	// <summary>
 	// This is your game class. This is an entity that is created serverside when
-	// the game starts, and is replicated to the client. 
-	// 
+	// the game starts, and is replicated to the client.
+	//
 	// You can use this to create things like HUD's and declare which player class
 	// to use for spawned players.
-	// 
-	// Your game needs to be registered (using [Library] here) with the same name 
+	//
+	// Your game needs to be registered (using [Library] here) with the same name
 	// as your game addon. If it isn't then we won't be able to find it.
 	// </summary>
 	[Library( "game" )]
 	public partial class RPGame : Game
 	{
 		public List<Jobs.Base> Jobs;
-		public static RPGame Instance;
+		private static RPGame instance;
+
+		public static RPGame Instance { get => instance; set => instance = value; }
+
 		public RPGame()
 		{
 			Instance = this;
@@ -32,7 +35,7 @@ namespace RPGamemode
 				Jobs = FileSystem.Data.ReadJson<List<Jobs.Base>>("jobs.json");
 				SetJobs(JsonSerializer.Serialize(Jobs));
 				// Create Hud
-				new UI.TestHud();
+				_ = new UI.TestHud();
 			}
 
 			if ( IsClient )
@@ -42,8 +45,6 @@ namespace RPGamemode
 				Log.Info( "My Gamemode Has Created Clientside!" );
 			}
 		}
-
-
 
 		/// <summary>
 		/// A client has joined the server. Make them a pawn to play with
@@ -61,6 +62,11 @@ namespace RPGamemode
 		[ServerCmd("change_job")]
 		public static void ChangeJob(string jobName)
 		{
+			if (jobName is null)
+			{
+				Sandbox.Log.Error("jobName was not defined.");
+			}
+
 			var owner = ConsoleSystem.Caller;
 
 			if (owner == null)
@@ -70,7 +76,7 @@ namespace RPGamemode
 
 			var player = new Pawns.GamePlayer();
 			owner.Pawn = player;
-			
+
 			player.Respawn();
 		}
 
@@ -89,5 +95,4 @@ namespace RPGamemode
 			Jobs = JsonSerializer.Deserialize<List<Jobs.Base>>(jobs);
 		}
 	}
-
 }
