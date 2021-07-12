@@ -1,3 +1,2 @@
 /*.bin
-*.cache
-/obj
+code/obj
