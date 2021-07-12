@@ -40,7 +40,7 @@ namespace RPGamemode.UI
 							var entry = (Jobs.Base)data;
 							Log.Info(entry);
 							var icon = cell.Add.Button(entry.Name, "icon");
-							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", entry.Name));
+							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", entry.GUID));
 							icon.Style.Background = new PanelBackground
 							{
 								Texture = Texture.Load($"/Jobs/Imgs/{entry.Name}.png", true)

@@ -60,11 +60,12 @@ namespace RPGamemode
 		}
 
 		[ServerCmd("change_job")]
-		public static void ChangeJob(string jobName)
+		public static void ChangeJob(string guid)
 		{
-			if (jobName is null)
+			if (!RPGame.Instance.Jobs.Exists(job => job.GUID.Equals(guid)))
 			{
-				Sandbox.Log.Error("jobName was not defined.");
+				Sandbox.Log.Error($"job {guid} does not exist!");
+				return;
 			}
 
 			var owner = ConsoleSystem.Caller;
@@ -75,6 +76,7 @@ namespace RPGamemode
 			owner.Pawn.Delete();
 
 			var player = new Pawns.GamePlayer();
+			player.Job = RPGame.Instance.Jobs.Find(x => x.GUID == guid);
 			owner.Pawn = player;
 
 			player.Respawn();

@@ -7,6 +7,8 @@ namespace RPGamemode.Pawns
 	{
 		private DamageInfo damageInfo;
 
+		public Jobs.Base Job { get; set; }
+
 		public GamePlayer()
 		{
 		}

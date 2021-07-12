@@ -15,6 +15,7 @@ namespace RPGamemode.UI
 
 			RootPanel.AddChild<NameTags>();
 			RootPanel.AddChild<Health>();
+			RootPanel.AddChild<Job>();
 			RootPanel.AddChild<JobSelectMenu>();
 		}
 	}
