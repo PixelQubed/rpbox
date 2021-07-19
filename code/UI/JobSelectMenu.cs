@@ -10,6 +10,7 @@ namespace RPGamemode.UI
 	public partial class JobSelectMenu : Panel
 	{
 		private readonly VirtualScrollPanel Overview;
+
 		public JobSelectMenu()
 		{
 			Instance = this;
@@ -24,23 +25,19 @@ namespace RPGamemode.UI
 					jobsPage.AddClass("page");
 					jobsPage.SetClass("active", true);
 
-					List<Jobs.Base> jobs = new();
 
-					if (RPGame.Instance.Jobs != null)
-					{
-						jobs = RPGame.Instance.Jobs;
-					}
 
 					jobsPage.AddChild(out Overview, "overview");
 					{
 						Overview.Layout.AutoColumns = true;
 						Overview.Layout.ItemSize = new Vector2(100, 100);
-						Overview.OnCreateCell = (cell, data) =>
+						Overview.OnCreateCell = (cell, data) => 
 						{
-							var entry = (Jobs.Base)data;
-							Log.Info(entry);
+							var entry = (RPGamemode.Job)data;
 							var icon = cell.Add.Button(entry.Name, "icon");
-							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", entry.GUID));
+
+							// This is probably trival and bad code... oh well...
+							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", JobManager.Instance.GetJobIndex(entry)));
 							icon.Style.Background = new PanelBackground
 							{
 								Texture = Texture.Load($"/Jobs/Imgs/{entry.Name}.png", true)
@@ -48,9 +45,8 @@ namespace RPGamemode.UI
 							var overlay = cell.Add.Panel("overlay");
 						};
 
-						foreach (var job in jobs)
-						{
-							Overview.AddItem(job);
+						if (!(JobManager.Instance is null)) {
+							UpdateJobs();
 						}
 					}
 
@@ -84,22 +80,23 @@ namespace RPGamemode.UI
 				Parent.AddClass("menuOpen");
 			else if (!pawn.Equals(typeof(Pawns.SelectJob)) && Parent.HasClass("menuOpen"))
 				Parent.RemoveClass("menuOpen");
-
-			UpdateJobs();
 		}
 
 		public void UpdateJobs()
 		{
-			if (Overview.ChildCount != 0)
+			if (JobManager.Instance is null || JobManager.Instance.Jobs is null || Overview.ChildCount == JobManager.Instance.Jobs.Count)
 				return;
-			if (RPGame.Instance.Jobs == null)
-			{
-				//RPGame.GetJobs();
-				return;
-			}
+			
+			Log.Info($"Updating Jobs List... Old Job Count: {Overview.ChildCount}, New Job Count: {JobManager.Instance.Jobs.Count}");
 
-			foreach (var job in RPGame.Instance.Jobs)
+			Overview.Clear();
+
+			foreach (var job in JobManager.Instance.Jobs)
 			{
+				if (job is null) {
+					continue;
+				}
+				Log.Info($"Adding Job: {job.Name}");
 				Overview.AddItem(job);
 			}
 		}

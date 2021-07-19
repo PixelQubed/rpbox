@@ -3,11 +3,12 @@ using System;
 
 namespace RPGamemode.Pawns
 {
-	internal partial class GamePlayer : Player
+	public partial class GamePlayer : Player
 	{
 		private DamageInfo damageInfo;
 
-		public Jobs.Base Job { get; set; }
+		[Net]
+		public Job Job { get; set; }
 
 		public GamePlayer()
 		{
