@@ -10,10 +10,12 @@ namespace RPGamemode.UI
 	public partial class JobSelectMenu : Panel
 	{
 		private readonly VirtualScrollPanel Overview;
+		private static JobSelectMenu instance;
+		public static JobSelectMenu Instance { get => instance; set => instance = value; }
 
 		public JobSelectMenu()
 		{
-			Instance = this;
+			instance = this;
 
 			StyleSheet.Load("/UI/Styles/JobSelectMenu.scss");
 
@@ -68,8 +70,6 @@ namespace RPGamemode.UI
 				}
 			}
 		}
-
-		public static JobSelectMenu Instance { get; set; }
 
 		public override void Tick()
 		{
