@@ -11,8 +11,6 @@ namespace RPGamemode.UI
 			if ( !IsClient )
 				return;
 
-			RootPanel.StyleSheet.Load( "/UI/Styles/TestHud.scss" );
-
 			RootPanel.AddChild<NameTags>();
 			RootPanel.AddChild<Health>();
 			RootPanel.AddChild<Job>();
