@@ -20,7 +20,7 @@ namespace RPGamemode
 	[Library( "game" )]
 	public partial class RPGame : Game
 	{
-		public List<Jobs.Base> Jobs;
+		public JobManager JobManager;
 		private static RPGame instance;
 
 		public static RPGame Instance { get => instance; set => instance = value; }
@@ -28,20 +28,18 @@ namespace RPGamemode
 		public RPGame()
 		{
 			Instance = this;
+
 			if ( IsServer )
 			{
 				Log.Info( "My Gamemode Has Created Serverside!" );
 
-				Jobs = FileSystem.Data.ReadJson<List<Jobs.Base>>("jobs.json");
-				SetJobs(JsonSerializer.Serialize(Jobs));
 				// Create Hud
 				_ = new UI.TestHud();
+				JobManager = new JobManager();
 			}
 
 			if ( IsClient )
 			{
-				//Jobs = new List<Jobs.Base>();
-				GetJobs();
 				Log.Info( "My Gamemode Has Created Clientside!" );
 			}
 		}
@@ -60,11 +58,12 @@ namespace RPGamemode
 		}
 
 		[ServerCmd("change_job")]
-		public static void ChangeJob(string guid)
+		public static void ChangeJob(int id)
 		{
-			if (!RPGame.Instance.Jobs.Exists(job => job.GUID.Equals(guid)))
+			var job = RPGame.Instance.JobManager.GetJob(id);
+			if (job is null)
 			{
-				Sandbox.Log.Error($"job {guid} does not exist!");
+				Sandbox.Log.Error($"job {id} does not exist!");
 				return;
 			}
 
@@ -76,25 +75,12 @@ namespace RPGamemode
 			owner.Pawn.Delete();
 
 			var player = new Pawns.GamePlayer();
-			player.Job = RPGame.Instance.Jobs.Find(x => x.GUID == guid);
+			player.Job = job;
 			owner.Pawn = player;
 
 			player.Respawn();
-		}
 
-		[ServerCmd]
-		public static void GetJobs()
-		{
-			var json = JsonSerializer.Serialize(RPGame.Instance.Jobs);
-			Log.Info("GETTING JOBS: " + json);
-			RPGame.Instance.SetJobs(json);
-		}
-
-		[ClientRpc]
-		public void SetJobs(string jobs)
-		{
-			Log.Info("SETTING JOBS: " + jobs);
-			Jobs = JsonSerializer.Deserialize<List<Jobs.Base>>(jobs);
+			Log.Info($"Player is now playing as {player.Job.Name}");
 		}
 	}
 }

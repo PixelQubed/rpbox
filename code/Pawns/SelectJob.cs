@@ -3,7 +3,7 @@ using System;
 
 namespace RPGamemode.Pawns
 {
-	internal partial class SelectJob : Player
+	public partial class SelectJob : Player
 	{
 		public override void Respawn()
 		{
