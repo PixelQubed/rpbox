@@ -17,9 +17,7 @@ namespace RPGamemode.Pawns
 		public Job Job { get; set; }
 
 		public GamePlayer()
-		public GamePlayer()
 		{
-			
 		}
 
 		public override void Spawn()
