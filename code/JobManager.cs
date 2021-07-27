@@ -39,7 +39,7 @@ namespace RPGamemode
 			RPGame.Instance.JobManager = this;
 
 			if (IsServer) {
-				var jobsJson = FileSystem.Data.ReadAllText("jobs.json");
+				var jobsJson = FileSystem.OrganisationData.ReadAllText("jobs.json");
 				Jobs = new List<Job>();
 				Jobs = JsonSerializer.Deserialize<List<Job>>(jobsJson);
 			}
