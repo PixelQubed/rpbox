@@ -33,7 +33,7 @@ namespace RPGamemode.UI
 					{
 						Overview.Layout.AutoColumns = true;
 						Overview.Layout.ItemSize = new Vector2(100, 100);
-						Overview.OnCreateCell = (cell, data) => 
+						Overview.OnCreateCell = (cell, data) =>
 						{
 							var entry = (RPGamemode.Job)data;
 							var icon = cell.Add.Button(entry.Name, "icon");
@@ -86,7 +86,7 @@ namespace RPGamemode.UI
 		{
 			if (JobManager.Instance is null || JobManager.Instance.Jobs is null || Overview.ChildCount == JobManager.Instance.Jobs.Count)
 				return;
-			
+
 			Log.Info($"Updating Jobs List... Old Job Count: {Overview.ChildCount}, New Job Count: {JobManager.Instance.Jobs.Count}");
 
 			Overview.Clear();
