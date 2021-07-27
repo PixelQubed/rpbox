@@ -1,23 +1,45 @@
 using Sandbox;
 using System;
+using System.Collections.Generic;
 
 namespace RPGamemode.Pawns
 {
 	public partial class GamePlayer : Player
 	{
 		private DamageInfo damageInfo;
+		public ModelEntity cubemapModel;
+		Vector3[] offsets = new Vector3[4];
+		public bool shouldUpdate = false;
+		[ConVar.ClientData( "debug_cubemap" )]
+		public static bool shouldRender { get; set; } = false;
 
 		[Net, OnChangedCallback]
 		public Job Job { get; set; }
 
 		public GamePlayer()
+		public GamePlayer()
 		{
+			
+		}
+
+		public override void Spawn()
+		{
+			base.Spawn();
+			cubemapModel = new ModelEntity();
+			cubemapModel.PhysicsEnabled = false;
+			cubemapModel.SetModel( "models/cubemap_test.vmdl" );
+			cubemapModel.EnableHideInFirstPerson = false;
+			cubemapModel.EnableDrawing = true;
+			cubemapModel.Spawn();
+
+			shouldUpdate = true;
+
+
 		}
 
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
-
 			//
 			// Use WalkController for movement (you can make your own PlayerController for 100% control)
 			//
@@ -49,11 +71,20 @@ namespace RPGamemode.Pawns
 			Debug.MovementDebugger.Invoke( GroundEntity );
 
 			base.Simulate( cl );
-
 			//
 			// If you have active children (like a weapon etc) you should call this to
 			// simulate those too.
 			//
+
+			Rotation offsetRot;
+			if ( shouldUpdate )
+			{
+				cubemapModel.Position = cl.Pawn.EyePos + (cl.Pawn.EyeRot.Forward * 30f);
+				cubemapModel.Rotation = Rotation.From(0, cl.Pawn.EyeRot.Yaw() + 90f, cl.Pawn.EyeRot.Pitch());
+				cubemapModel.EnableDrawing = shouldRender; 
+			}
+
+			
 			SimulateActiveChild( cl, ActiveChild );
 
 			if (IsServer) {
@@ -70,6 +101,7 @@ namespace RPGamemode.Pawns
 				}
 			}
 		}
+
 
 		public override void OnKilled()
 		{
