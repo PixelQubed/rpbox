@@ -1,3 +1,4 @@
 /*.bin
 code/obj
 code/*.csproj
+code/Properties/launchSettings.json
