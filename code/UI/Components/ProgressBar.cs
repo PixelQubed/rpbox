@@ -3,7 +3,7 @@ using Sandbox.UI;
 using Sandbox.UI.Construct;
 using System.Threading;
 
-namespace RPGamemode.UI
+namespace RPBox.UI
 {
     public class ProgressBar : Panel
     {

@@ -4,7 +4,7 @@ using Sandbox.UI.Construct;
 using Sandbox.UI.Tests;
 using System.Collections.Generic;
 
-namespace RPGamemode.UI
+namespace RPBox.UI
 {
 	[Library]
 	public partial class JobSelectMenu : Panel
@@ -35,14 +35,14 @@ namespace RPGamemode.UI
 						Overview.Layout.ItemSize = new Vector2(100, 100);
 						Overview.OnCreateCell = (cell, data) =>
 						{
-							var entry = (RPGamemode.Job)data;
-							var icon = cell.Add.Button(entry.Name, "icon");
+							var entry = (RPBox.Job)data;
+							var icon = cell.Add.Button(entry.name, "icon");
 
 							// This is probably trival and bad code... oh well...
 							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", JobManager.Instance.GetJobIndex(entry)));
 							icon.Style.Background = new PanelBackground
 							{
-								Texture = Texture.Load($"/Jobs/Imgs/{entry.Name}.png", true)
+								Texture = Texture.Load($"/Jobs/Imgs/{entry.name}.png", true)
 							};
 							var overlay = cell.Add.Panel("overlay");
 						};
@@ -59,7 +59,7 @@ namespace RPGamemode.UI
 
 				var header = left.Add.Panel("header");
 				{
-					header.Add.Label("RP Gamemode", "title");
+					header.Add.Label("Select your career...", "title");
 				}
 
 				var body = left.Add.Panel("body");
@@ -96,7 +96,7 @@ namespace RPGamemode.UI
 				if (job is null) {
 					continue;
 				}
-				Log.Info($"Adding Job: {job.Name}");
+				Log.Info($"Adding Job: {job.name}");
 				Overview.AddItem(job);
 			}
 		}

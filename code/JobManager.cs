@@ -3,26 +3,32 @@ using Sandbox.Internal;
 using System.Text.Json;
 using System.Collections.Generic;
 
-namespace RPGamemode
+namespace RPBox
 {
 	[Library("job")]
 	public partial class Job : Entity
 	{
 		[Net]
-		public string Name { get; set; }
+		public string name { get; set; }
 		[Net]
-		public int Income { get; set; }
+		public int income { get; set; }
 		[Net]
-		public List<string> Loadout { get; set; }
+		public List<string> loadout { get; set; }
 
 		public Job()
 		{
 			Transmit = TransmitType.Always;
+
 			Log.Info("Creating Job Instance...");
-			if (IsClient)
-				Log.Info("Creating job on client!");
+
+			if ( IsClient )
+			{
+				Log.Info( "Creating job on client!" );
+			}
+
 			// JobManager.Instance.Jobs.Add(this);
 		}
+
 	}
 
     public partial class JobManager : Entity
@@ -36,7 +42,7 @@ namespace RPGamemode
 		{
 			Transmit = TransmitType.Always;
 			instance = this;
-			RPGame.Instance.JobManager = this;
+			RPBoxGame.Instance.JobManager = this;
 
 			if (IsServer) {
 				var jobsJson = FileSystem.Mounted.ReadAllText("/data/jobs.json");

@@ -2,7 +2,7 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-namespace RPGamemode.UI
+namespace RPBox.UI
 {
     public partial class Job : Panel
     {
