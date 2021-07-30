@@ -6,7 +6,6 @@ public partial class LampEntity : SpotLightEntity, IUse
 	public override void Spawn()
 	{
 		base.Spawn();
-
 		SetModel( "models/torch/torch.vmdl" );
 		SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
 	}

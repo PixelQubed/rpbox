@@ -63,8 +63,11 @@
 				if ( !tr.Hit )
 					return;
 
-				if ( !tr.Entity.IsValid() )
-					return;
+				if ( !tr.Entity.IsValid() && !(tr.Entity.Owner == this.Owner) )
+				{
+					Log.Info( "Invalid target" );
+					return; 
+				}
 
 				CreateHitEffects( tr.EndPos );
 

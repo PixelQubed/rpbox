@@ -114,6 +114,7 @@ namespace RPBox
 			ent.Position = tr.EndPos;
 			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
+			ent.Owner = owner;
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )

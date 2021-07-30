@@ -14,7 +14,7 @@ partial class Cubemap : Weapon
 	{
 		base.Spawn();
 
-		SetModel( "weapons/rust_pistol/rust_pistol.vmdl" );
+		SetModel( "models/cubemap_test.vmdl" );
 		SetParent( Owner, true );
 	}
 
