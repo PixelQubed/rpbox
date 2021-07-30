@@ -255,7 +255,7 @@ namespace RPBox.Pawns
 		{
 			if ( Job != null )
 			{
-				UI.Job.Instance.UpdateJobText( Job.name );
+				UI.Job.Instance.UpdateJobText( Job.Name );
 			}
 		}
 

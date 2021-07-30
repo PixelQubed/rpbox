@@ -36,13 +36,13 @@ namespace RPBox.UI
 						Overview.OnCreateCell = (cell, data) =>
 						{
 							var entry = (RPBox.Job)data;
-							var icon = cell.Add.Button(entry.name, "icon");
+							var icon = cell.Add.Button(entry.Name, "icon");
 
 							// This is probably trival and bad code... oh well...
 							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", JobManager.Instance.GetJobIndex(entry)));
 							icon.Style.Background = new PanelBackground
 							{
-								Texture = Texture.Load($"/Jobs/Imgs/{entry.name}.png", true)
+								Texture = Texture.Load($"/Jobs/Imgs/{entry.Name}.png", true)
 							};
 							var overlay = cell.Add.Panel("overlay");
 						};
@@ -96,7 +96,7 @@ namespace RPBox.UI
 				if (job is null) {
 					continue;
 				}
-				Log.Info($"Adding Job: {job.name}");
+				Log.Info($"Adding Job: {job.Name}");
 				Overview.AddItem(job);
 			}
 		}

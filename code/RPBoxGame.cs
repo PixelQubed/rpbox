@@ -81,14 +81,14 @@ namespace RPBox
 
 			player.Respawn();
 
-			Log.Info($"Player is now playing as {player.Job.name}");
+			Log.Info($"Player is now playing as {player.Job.Name}");
 			EquipLoadoutFromJob( player.Job );
 		}
 
 		public static void EquipLoadoutFromJob( Job job )
 		{
 			int i = 0;
-			foreach ( string weapon in job.loadout )
+			foreach ( string weapon in job.Loadout )
 			{
 				Log.Info( "Weapon " + i + " is " + weapon );
 				i++;

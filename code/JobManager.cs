@@ -9,11 +9,11 @@ namespace RPBox
 	public partial class Job : Entity
 	{
 		[Net]
-		public string name { get; set; }
+		public string Name { get; set; }
 		[Net]
-		public int income { get; set; }
+		public int Income { get; set; }
 		[Net]
-		public List<string> loadout { get; set; }
+		public List<string> Loadout { get; set; }
 
 		public Job()
 		{
