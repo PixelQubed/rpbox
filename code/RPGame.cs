@@ -55,32 +55,7 @@ namespace RPBox
 			client.Pawn = player;
 
 			player.Respawn();
-		}
-
-		[ServerCmd("change_job")]
-		public static void ChangeJob(int id)
-		{
-			var job = RPGame.Instance.JobManager.GetJob(id);
-			if (job is null)
-			{
-				Sandbox.Log.Error($"job {id} does not exist!");
-				return;
-			}
-
-			var owner = ConsoleSystem.Caller;
-
-			if (owner == null)
-				return;
-
-			owner.Pawn.Delete();
-
-			var player = new Pawns.GamePlayer();
-			player.Job = job;
-			owner.Pawn = player;
-
-			player.Respawn();
-
-			Log.Info($"Player is now playing as {player.Job.Name}");
+			
 		}
 	}
 }
