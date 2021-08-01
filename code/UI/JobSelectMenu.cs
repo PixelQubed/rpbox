@@ -4,7 +4,7 @@ using Sandbox.UI.Construct;
 using Sandbox.UI.Tests;
 using System.Collections.Generic;
 
-namespace RPGamemode.UI
+namespace RPBox.UI
 {
 	[Library]
 	public partial class JobSelectMenu : Panel

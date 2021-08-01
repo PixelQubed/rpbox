@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Sandbox;
 
-namespace RPGamemode.Debug
+namespace RPBox.Debug
 {
     public static class MovementDebugger
     {

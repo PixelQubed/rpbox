@@ -1,7 +1,7 @@
-﻿using Sandbox;
+using Sandbox;
 using Sandbox.UI;
 
-namespace RPGamemode.UI
+namespace RPBox.UI
 {
 	public partial class TestHud : HudEntity<RootPanel>
 	{

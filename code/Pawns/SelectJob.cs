@@ -1,7 +1,7 @@
 using Sandbox;
 using System;
 
-namespace RPGamemode.Pawns
+namespace RPBox.Pawns
 {
 	public partial class SelectJob : Player
 	{

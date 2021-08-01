@@ -1,5 +1,5 @@
 // 
-// RPGamemode.Job : Sandbox.Entity 
+// RPBox.Job : Sandbox.Entity 
 // 
 @PointClass = job : ""
 [
@@ -9,7 +9,7 @@
 ]
 
 // 
-// RPGamemode.RPGame : Sandbox.Game 
+// RPBox.RPGame : Sandbox.Game 
 // 
 @PointClass = game : ""
 [

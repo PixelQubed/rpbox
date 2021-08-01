@@ -3,7 +3,7 @@ using Sandbox.Internal;
 using System.Text.Json;
 using System.Collections.Generic;
 
-namespace RPGamemode
+namespace RPBox
 {
 	[Library("job")]
 	public partial class Job : Entity
