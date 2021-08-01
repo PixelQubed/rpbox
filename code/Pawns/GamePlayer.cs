@@ -80,7 +80,7 @@ namespace RPBox.Pawns
 
 		private void OnJobChanged()
 		{
-			if (Job != null)
+			if (Job != null && IsLocalPawn)
 				UI.Job.Instance.UpdateJobText(Job.Name);
 		}
 	}
