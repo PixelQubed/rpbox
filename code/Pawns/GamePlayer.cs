@@ -58,9 +58,9 @@ namespace RPBox.Pawns
 
 			if (IsServer) {
 				if (Velocity.z < -600 && GroundEntity == null && !Controller.HasTag("noclip")) {
-					damageInfo.Damage = Math.Abs(Velocity.y / 15);
+					damageInfo.Damage = Math.Abs(Velocity.z / 15);
 					damageInfo.Body = PhysicsBody;
-				} else if (Velocity.z > 0 || Controller.HasTag("noclip")) {
+				} else if (Velocity.z > -600 || Controller.HasTag("noclip")) {
 					damageInfo.Damage = 0;
 				}
 
