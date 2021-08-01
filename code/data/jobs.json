@@ -1,0 +1,12 @@
+[
+	{
+		"Name": "Police",
+		"Income": 200,
+		"Loadout": ["weapon_pistol", "weapon_stungun"]
+	},
+	{
+		"Name": "Medic",
+		"Income": 100,
+		"Loadout": ["weapon_defibrillator", "weapon_syringe"]
+	}
+]

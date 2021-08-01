@@ -18,11 +18,17 @@ namespace RPBox
 		public Job()
 		{
 			Transmit = TransmitType.Always;
+
 			Log.Info("Creating Job Instance...");
-			if (IsClient)
-				Log.Info("Creating job on client!");
+
+			if ( IsClient )
+			{
+				Log.Info( "Creating job on client!" );
+			}
+
 			// JobManager.Instance.Jobs.Add(this);
 		}
+
 	}
 
     public partial class JobManager : Entity
@@ -36,10 +42,10 @@ namespace RPBox
 		{
 			Transmit = TransmitType.Always;
 			instance = this;
-			RPGame.Instance.JobManager = this;
+			RPBoxGame.Instance.JobManager = this;
 
 			if (IsServer) {
-				var jobsJson = FileSystem.Data.ReadAllText("jobs.json");
+				var jobsJson = FileSystem.Mounted.ReadAllText("/data/jobs.json");
 				Jobs = new List<Job>();
 				Jobs = JsonSerializer.Deserialize<List<Job>>(jobsJson);
 			}

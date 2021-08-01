@@ -14,6 +14,13 @@ namespace RPBox.UI
 			RootPanel.AddChild<Overhead>();
 			RootPanel.AddChild<Health>();
 			RootPanel.AddChild<Job>();
+			RootPanel.AddChild<InventoryBar>();
+			RootPanel.AddChild<CrosshairCanvas>();
+			RootPanel.AddChild<ChatBox>();
+			RootPanel.AddChild<VoiceList>();
+			RootPanel.AddChild<KillFeed>();
+			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
+			RootPanel.AddChild<SpawnMenu>();
 			RootPanel.AddChild<JobSelectMenu>();
 			RootPanel.AddChild<ChatBox>();
 		}

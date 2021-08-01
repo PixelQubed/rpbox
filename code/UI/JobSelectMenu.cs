@@ -38,7 +38,7 @@ namespace RPBox.UI
 					{
 						Overview.Layout.AutoColumns = true;
 						Overview.Layout.ItemSize = new Vector2(100, 100);
-						Overview.OnCreateCell = (cell, data) => 
+						Overview.OnCreateCell = (cell, data) =>
 						{
 							var entry = (RPBox.Job)data;
 							var icon = cell.Add.Button(entry.Name, "icon");
@@ -68,7 +68,7 @@ namespace RPBox.UI
 
 				var header = left.Add.Panel("header");
 				{
-					header.Add.Label("RP Gamemode", "title");
+					header.Add.Label("Select your career...", "title");
 				}
 
 				var body = left.Add.Panel("body");
@@ -104,7 +104,7 @@ namespace RPBox.UI
 		{
 			if (JobManager.Instance is null || JobManager.Instance.Jobs is null || Overview.ChildCount == JobManager.Instance.Jobs.Count)
 				return;
-			
+
 			Log.Info($"Updating Jobs List... Old Job Count: {Overview.ChildCount}, New Job Count: {JobManager.Instance.Jobs.Count}");
 
 			Overview.Clear();
