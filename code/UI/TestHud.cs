@@ -1,4 +1,4 @@
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
 
 namespace RPBox.UI
@@ -11,10 +11,11 @@ namespace RPBox.UI
 			if ( !IsClient )
 				return;
 
-			RootPanel.AddChild<NameTags>();
+			RootPanel.AddChild<Overhead>();
 			RootPanel.AddChild<Health>();
 			RootPanel.AddChild<Job>();
 			RootPanel.AddChild<JobSelectMenu>();
+			RootPanel.AddChild<ChatBox>();
 		}
 	}
 }
