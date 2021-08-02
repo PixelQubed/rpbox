@@ -128,7 +128,7 @@ JobSelectMenu {
 			background-position: center;
 			background-size: cover;
 			background-color: rgba(#000000, 0.1);
-			background-image: url(/Jobs/Imgs/Default.png);
+			background-image: url(/UI/Imgs/Default.png);
 
 			label {
 				font-size: 9px;
@@ -152,6 +152,30 @@ JobSelectMenu {
 				left: 0;
 				right: 0;
 			}
+		}
+	}
+
+	.job-info {
+		border-radius: 16px;
+		color: rgba(#fff, 0.5);
+		position: absolute;
+		width: 90%;
+		height: 80%;
+		top: 10%;
+		background-color: rgba(#000000, 0.5);
+		z-index: 1000;
+
+		.close-btn {
+			margin-left: auto;
+			text-align: center;
+			width: 36px;
+			height: 36px;
+			top: 10px;
+			left: 97%;
+			margin-right: 10px;
+			border-radius: 100%;
+			padding: 10px;
+			background-color: #808080;
 		}
 	}
 }

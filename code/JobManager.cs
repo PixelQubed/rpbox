@@ -66,5 +66,33 @@ namespace RPBox
 			Log.Info($"Jobs has changed! {Jobs} {Jobs.Count}");
 			UI.JobSelectMenu.Instance.UpdateJobs();
 		}
+
+		[ServerCmd("change_job")]
+		public static void ChangeJob(int id)
+		{
+			var job = JobManager.Instance.GetJob(id);
+			if (job is null)
+			{
+				Sandbox.Log.Error($"job {id} does not exist!");
+				return;
+			}
+
+			var owner = ConsoleSystem.Caller;
+
+			if (owner == null)
+				return;
+
+			owner.Pawn.Delete();
+
+			var player = new Pawns.GamePlayer();
+			player.Job = job;
+			owner.Pawn = player;
+
+			player.Respawn();
+
+			Log.Info($"Player is now playing as {player.Job.Name}");
+
+			
+		}
     }
 }

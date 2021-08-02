@@ -12,10 +12,15 @@ namespace RPBox.UI
 		private readonly VirtualScrollPanel Overview;
 		private static JobSelectMenu instance;
 		public static JobSelectMenu Instance { get => instance; set => instance = value; }
+		private bool Open { get; set; }
+
+		private RPBox.Job Job { get; set; }
 
 		public JobSelectMenu()
 		{
 			instance = this;
+
+			Open = false;
 
 			StyleSheet.Load("/UI/Styles/JobSelectMenu.scss");
 
@@ -39,10 +44,10 @@ namespace RPBox.UI
 							var icon = cell.Add.Button(entry.Name, "icon");
 
 							// This is probably trival and bad code... oh well...
-							icon.AddEventListener("onclick", () => ConsoleSystem.Run("change_job", JobManager.Instance.GetJobIndex(entry)));
+							icon.AddEventListener("onclick", () => Job = entry);
 							icon.Style.Background = new PanelBackground
 							{
-								Texture = Texture.Load($"/Jobs/Imgs/{entry.Name}.png", true)
+								Texture = Texture.Load( FileSystem.Data.FindFile( "images", $"{entry.Name}.png" ).GetEnumerator().Current )
 							};
 							var overlay = cell.Add.Panel("overlay");
 						};
@@ -52,8 +57,12 @@ namespace RPBox.UI
 						}
 					}
 
-					var information = jobsPage.Add.Panel("jobs-overview");
+					var information = jobsPage.Add.Panel("job-info");
 					{
+						information.Add.Button( "X", "close-btn", () => {
+								information.Style.Display = DisplayMode.None;
+								information.Style.Dirty();
+							});
 					}
 				}
 
@@ -76,10 +85,19 @@ namespace RPBox.UI
 			base.Tick();
 
             var pawn = Local.Pawn.GetType();
-            if (pawn.Equals(typeof(Pawns.SelectJob)) && !Parent.HasClass("menuOpen"))
+            if (pawn.Equals(typeof(Pawns.SelectJob)) && !Parent.HasClass("menuOpen") || Open)
 				Parent.AddClass("menuOpen");
-			else if (!pawn.Equals(typeof(Pawns.SelectJob)) && Parent.HasClass("menuOpen"))
+			else if (!pawn.Equals(typeof(Pawns.SelectJob)) && Parent.HasClass("menuOpen") && !Open)
 				Parent.RemoveClass("menuOpen");
+		}
+
+		public override void OnKeyTyped( char key )
+		{
+			Log.Info(key);
+			if (key == 'f') {
+				Parent.SetClass("menuOpen", !Open);
+				Open = !Open;
+			}
 		}
 
 		public void UpdateJobs()
