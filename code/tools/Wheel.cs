@@ -44,6 +44,10 @@
 				if ( !tr.Hit )
 					return;
 
+				//check see if we own the prop, if not, then do nothing.
+				if ( tr.Entity.Owner != this.Owner && !tr.Entity.IsWorld )
+					return;
+
 				if ( !tr.Entity.IsValid() )
 					return;
 
@@ -68,9 +72,9 @@
 				};
 
 				ent.SetModel( "models/citizen_props/wheel01.vmdl" );
-
+				
+				ent.Owner = this.Owner;
 				ent.PhysicsBody.Mass = tr.Body.Mass;
-
 				ent.Joint = PhysicsJoint.Revolute
 					.From( ent.PhysicsBody )
 					.To( tr.Body )

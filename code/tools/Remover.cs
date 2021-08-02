@@ -27,6 +27,10 @@
 				if ( tr.Entity is Player )
 					return;
 
+				//check see if we own the prop, if not, then do nothing.
+				if ( tr.Entity.Owner != this.Owner )
+					return;
+
 				CreateHitEffects( tr.EndPos );
 
 				if ( tr.Entity.IsWorld )

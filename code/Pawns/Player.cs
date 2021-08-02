@@ -1,6 +1,9 @@
 ﻿using Sandbox;
 using RPBox.UI;
 using System;
+using RPBox.Permissions;
+using System.Collections.Generic;
+
 
 namespace RPBox.Pawns
 {
@@ -21,6 +24,9 @@ namespace RPBox.Pawns
 
 		[Net, OnChangedCallback]
 		public Job Job { get; set; }
+
+		[Net, OnChangedCallback]
+		public List<Permission> permissions { get; set; }
 		public SandboxPlayer()
 		{
 			Inventory = new Inventory( this );
@@ -59,8 +65,8 @@ namespace RPBox.Pawns
 			Inventory.Add( new PhysGun(), true );
 			Inventory.Add( new GravGun() );
 			Inventory.Add( new Tool() );
-			Inventory.Add( new Pistol() );
-			Inventory.Add( new Flashlight() );
+			//Inventory.Add( new Pistol() );
+			//Inventory.Add( new Flashlight() );
 
 			base.Respawn();
 		}
@@ -257,6 +263,11 @@ namespace RPBox.Pawns
 			{
 				UI.Job.Instance.UpdateJobText( Job.Name );
 			}
+		}
+
+		private void OnPermissionsChanged()
+		{
+			return;
 		}
 
 		// TODO

@@ -25,6 +25,10 @@ namespace Sandbox.Tools
 
 				if ( !tr.Hit || !tr.Entity.IsValid() )
 					return;
+				
+				//check see if we own the prop, if not, then do nothing.
+				if ( tr.Entity.Owner != this.Owner )
+					return;
 
 				if ( tr.Entity is not ModelEntity modelEnt )
 					return;

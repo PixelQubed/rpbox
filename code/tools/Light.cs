@@ -48,6 +48,10 @@
 
 				if ( !tr.Hit || !tr.Entity.IsValid() )
 					return;
+				
+				//check see if we own the prop, if not, then do nothing.
+				if ( tr.Entity.Owner != this.Owner && useRope && !tr.Entity.IsWorld )
+					return;
 
 				CreateHitEffects( tr.EndPos );
 
@@ -70,6 +74,7 @@
 					Color = Color.Random,
 				};
 
+				light.Owner = this.Owner;
 				light.UseFogNoShadows();
 				light.SetModel( Model );
 				light.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );

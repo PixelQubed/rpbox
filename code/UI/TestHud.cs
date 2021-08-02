@@ -20,7 +20,9 @@ namespace RPBox.UI
 			RootPanel.AddChild<KillFeed>();
 			RootPanel.AddChild<Scoreboard<ScoreboardEntry>>();
 			RootPanel.AddChild<SpawnMenu>();
+			RootPanel.AddChild<CurrentTool>();
 			RootPanel.AddChild<JobSelectMenu>();
+
 		}
 	}
 }

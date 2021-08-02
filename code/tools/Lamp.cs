@@ -4,7 +4,6 @@
 	public partial class LampTool : BaseTool
 	{
 		PreviewEntity previewModel;
-
 		private string Model => "models/torch/torch.vmdl";
 
 		protected override bool IsPreviewTraceValid( TraceResult tr )
@@ -73,6 +72,7 @@
 					Color = Color.Random,
 					Rotation = Rotation.Identity
 				};
+				lamp.Owner = this.Owner;
 				lamp.SetModel( Model );
 				lamp.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
 				lamp.Position = tr.EndPos + -lamp.CollisionBounds.Center + tr.Normal * lamp.CollisionBounds.Size * 0.5f;
