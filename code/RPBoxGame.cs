@@ -23,13 +23,10 @@ namespace RPBox
 	{
 		public JobManager JobManager;
 		private static RPBoxGame instance;
-		public static List<SandboxPlayer> PlayerList;
 		public static RPBoxGame Instance { get => instance; set => instance = value; }
 
 		public RPBoxGame()
 		{
-			PlayerList = new List<SandboxPlayer>();
-
 			Instance = this;
 
 			if ( IsServer )
@@ -64,7 +61,6 @@ namespace RPBox
 		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
 		{
 			base.ClientDisconnect( client, reason );
-			PlayerList.Remove( client.Pawn as SandboxPlayer );
 		}
 
 		[ServerCmd("change_job")]
@@ -84,14 +80,13 @@ namespace RPBox
 
 			owner.Pawn.Delete();
 
-			var player = new SandboxPlayer();
+			SandboxPlayer player = new SandboxPlayer();
 
 			
 			player.Job = job;
 			owner.Pawn = player;
 
 			player.Respawn();
-			PlayerList.Add( player );
 
 			Log.Info(player.GetClientOwner().Name + " is now playing as " + player.Job.Name );
 			EquipLoadoutFromJob( player );
@@ -110,49 +105,10 @@ namespace RPBox
 			i = 0;
 		}
 
-		public static SandboxPlayer GetPlayerByName( string partialName )
-		{
-			Log.Info( "Player to find: " + partialName );
-			List<SandboxPlayer> playersFound = new List<SandboxPlayer>();
-
-			foreach ( SandboxPlayer playerToSearch in PlayerList )
-			{
-				if ( playerToSearch.GetClientOwner().Name.Contains( partialName ) )
-				{
-					playersFound.Add( playerToSearch );
-				}
-			}
-
-			if ( playersFound.Count > 1 )
-			{
-				Log.Info( "Found multiple players, please redefine your search query" );
-				foreach ( SandboxPlayer playerFoundMultiple in PlayerList )
-				{
-					Log.Info( "Found player: " + playerFoundMultiple.GetClientOwner().Name );
-				}
-
-				return null;
-			}
-
-			if ( playersFound.Count == 1 )
-			{
-				Log.Info( "Player Found: " + playersFound[0].GetClientOwner().Name );
-				return playersFound[0];
-			}
-
-			else if (playersFound.Count == 0)
-			{
-				Log.Info( "Player not found, count was 0" );
-				return null;
-			}
-
-			return null;
-		}
-
 		[ServerCmd( "spawn" )]
 		public static void Spawn( string modelname )
 		{
-			var owner = ConsoleSystem.Caller?.Pawn;
+			v= ConsoleSystem.Caller?.Pawn;
 
 			if ( ConsoleSystem.Caller == null )
 				return;

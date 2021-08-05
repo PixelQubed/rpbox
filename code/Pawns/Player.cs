@@ -1,7 +1,6 @@
 ﻿using Sandbox;
 using RPBox.UI;
 using System;
-using RPBox.Permissions;
 using System.Collections.Generic;
 
 
@@ -25,8 +24,6 @@ namespace RPBox.Pawns
 		[Net, OnChangedCallback]
 		public Job Job { get; set; }
 
-		[Net, OnChangedCallback]
-		public List<Permission> permissions { get; set; }
 		public SandboxPlayer()
 		{
 			Inventory = new Inventory( this );
@@ -263,11 +260,6 @@ namespace RPBox.Pawns
 			{
 				UI.Job.Instance.UpdateJobText( Job.Name );
 			}
-		}
-
-		private void OnPermissionsChanged()
-		{
-			return;
 		}
 
 		// TODO

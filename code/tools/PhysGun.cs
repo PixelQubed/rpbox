@@ -119,7 +119,7 @@ public partial class PhysGun : Carriable
 			.HitLayer( CollisionLayer.Debris )
 			.Run();
 
-		if ( !tr.Hit || !tr.Body.IsValid() || tr.Entity.IsWorld || tr.Entity.Owner != this.Owner )
+		if ( !tr.Hit || !tr.Body.IsValid() || tr.Entity.IsWorld )
 			return;
 
 		var rootEnt = tr.Entity.Root;

@@ -35,10 +35,6 @@
 					{
 						return;
 					}
-				
-					//check see if we own the prop, if not, then do nothing.
-					if ( prop.Owner != this.Owner || target.Owner != this.Owner || prop.Root.Owner != this.Owner )
-						return;
 
 					if ( target == rootProp )
 						return;

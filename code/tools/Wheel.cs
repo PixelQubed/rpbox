@@ -44,10 +44,6 @@
 				if ( !tr.Hit )
 					return;
 
-				//check see if we own the prop, if not, then do nothing.
-				if ( tr.Entity.Owner != this.Owner && !tr.Entity.IsWorld )
-					return;
-
 				if ( !tr.Entity.IsValid() )
 					return;
 

@@ -30,10 +30,7 @@ namespace Sandbox.Tools
 
 				if ( !tr.Hit || !tr.Entity.IsValid() || tr.Entity.PhysicsGroup == null )
 					return;
-				
-				//check see if we own the prop, if not, then do nothing.
-				if ( tr.Entity.Owner != this.Owner )
-					return;
+			
 
 				// Disable resizing lights for now
 				if ( tr.Entity is LightEntity || tr.Entity is LampEntity )
