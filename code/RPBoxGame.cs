@@ -61,10 +61,10 @@ namespace RPBox
 			player.Respawn();
 		}
 
-		public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
+		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
 		{
-			base.ClientDisconnect( cl, reason );
-			PlayerList.Remove( cl.Pawn as SandboxPlayer );
+			base.ClientDisconnect( client, reason );
+			PlayerList.Remove( client.Pawn as SandboxPlayer );
 		}
 
 		[ServerCmd("change_job")]
@@ -106,22 +106,18 @@ namespace RPBox
 				i++;
 				Entity loadoutWeapon = Library.Create<Entity>( weapon, true );
 				player.Inventory.Add( loadoutWeapon, true );
-
 			}
 			i = 0;
-
 		}
 
-		public static SandboxPlayer GetPlayerByName( string playerToFindByPartialName )
+		public static SandboxPlayer GetPlayerByName( string partialName )
 		{
-			string player = playerToFindByPartialName;
-
-			Log.Info( "Player to find: " + playerToFindByPartialName );
+			Log.Info( "Player to find: " + partialName );
 			List<SandboxPlayer> playersFound = new List<SandboxPlayer>();
 
 			foreach ( SandboxPlayer playerToSearch in PlayerList )
 			{
-				if ( playerToSearch.GetClientOwner().Name ==  player )
+				if ( playerToSearch.GetClientOwner().Name.Contains( partialName ) )
 				{
 					playersFound.Add( playerToSearch );
 				}
@@ -171,7 +167,6 @@ namespace RPBox
 			ent.Position = tr.EndPos;
 			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
-			ent.Owner = owner;
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )
@@ -202,7 +197,6 @@ namespace RPBox
 			ent.Position = tr.EndPos;
 			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
-			ent.Owner = null;
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )

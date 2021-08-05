@@ -84,7 +84,7 @@ namespace RPBox
 
 			owner.Pawn.Delete();
 
-			var player = new Pawns.GamePlayer();
+			var player = new Pawns.SandboxPlayer();
 			player.Job = job;
 			owner.Pawn = player;
 
