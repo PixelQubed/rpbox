@@ -108,7 +108,7 @@ namespace RPBox
 		[ServerCmd( "spawn" )]
 		public static void Spawn( string modelname )
 		{
-			v= ConsoleSystem.Caller?.Pawn;
+			var owner = ConsoleSystem.Caller?.Pawn;
 
 			if ( ConsoleSystem.Caller == null )
 				return;
