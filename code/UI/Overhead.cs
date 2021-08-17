@@ -14,7 +14,7 @@ namespace RPBox.UI
 
 			if (player.GetType() == typeof(Pawns.SelectJob))
 				return;
-			Pawns.GamePlayer gamePlayer = (Pawns.GamePlayer)player;
+			Pawns.SandboxPlayer gamePlayer = (Pawns.SandboxPlayer)player;
 			var jobName = Add.Label($"{gamePlayer.Job.Name}", "job");
         }
 
