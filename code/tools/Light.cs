@@ -70,6 +70,7 @@
 					Color = Color.Random,
 				};
 
+				light.Owner = this.Owner;
 				light.UseFogNoShadows();
 				light.SetModel( Model );
 				light.SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );

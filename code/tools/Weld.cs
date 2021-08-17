@@ -24,7 +24,8 @@
 
 				if ( tr.Entity.PhysicsGroup == null || tr.Entity.PhysicsGroup.BodyCount > 1 )
 					return;
-
+				
+				
 				if ( tr.Entity is not Prop prop )
 					return;
 
@@ -50,6 +51,7 @@
 				}
 				else if ( Input.Pressed( InputButton.Attack2 ) )
 				{
+					
 					prop.Unweld( true );
 
 					Reset();

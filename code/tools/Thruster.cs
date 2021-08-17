@@ -77,6 +77,7 @@
 					Massless = massless
 				};
 
+				ent.Owner = this.Owner;
 				if ( attached )
 				{
 					ent.SetParent( tr.Body.Entity, tr.Body.PhysicsGroup.GetBodyBoneName( tr.Body ) );

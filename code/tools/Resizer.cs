@@ -30,6 +30,7 @@ namespace Sandbox.Tools
 
 				if ( !tr.Hit || !tr.Entity.IsValid() || tr.Entity.PhysicsGroup == null )
 					return;
+			
 
 				// Disable resizing lights for now
 				if ( tr.Entity is LightEntity || tr.Entity is LampEntity )

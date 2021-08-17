@@ -68,9 +68,9 @@
 				};
 
 				ent.SetModel( "models/citizen_props/wheel01.vmdl" );
-
+				
+				ent.Owner = this.Owner;
 				ent.PhysicsBody.Mass = tr.Body.Mass;
-
 				ent.Joint = PhysicsJoint.Revolute
 					.From( ent.PhysicsBody )
 					.To( tr.Body )

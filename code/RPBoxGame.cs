@@ -23,7 +23,6 @@ namespace RPBox
 	{
 		public JobManager JobManager;
 		private static RPBoxGame instance;
-
 		public static RPBoxGame Instance { get => instance; set => instance = value; }
 
 		public RPBoxGame()
@@ -52,10 +51,16 @@ namespace RPBox
 		{
 			base.ClientJoined( client );
 
+			Log.Info( "Player " + client.Name + " has joined the game." );
 			var player = new Pawns.SelectJob();
 			client.Pawn = player;
 
 			player.Respawn();
+		}
+
+		public override void ClientDisconnect( Client client, NetworkDisconnectionReason reason )
+		{
+			base.ClientDisconnect( client, reason );
 		}
 
 		[ServerCmd("change_job")]
@@ -75,27 +80,31 @@ namespace RPBox
 
 			owner.Pawn.Delete();
 
-			var player = new SandboxPlayer();
+			SandboxPlayer player = new SandboxPlayer();
+
+			
 			player.Job = job;
 			owner.Pawn = player;
 
 			player.Respawn();
 
-			Log.Info($"Player is now playing as {player.Job.Name}");
-			EquipLoadoutFromJob( player.Job );
+			Log.Info(player.GetClientOwner().Name + " is now playing as " + player.Job.Name );
+			EquipLoadoutFromJob( player );
 		}
 
-		public static void EquipLoadoutFromJob( Job job )
+		public static void EquipLoadoutFromJob( SandboxPlayer player )
 		{
 			int i = 0;
-			foreach ( string weapon in job.Loadout )
+			foreach ( string weapon in player.Job.Loadout )
 			{
 				Log.Info( "Weapon " + i + " is " + weapon );
 				i++;
+				Entity loadoutWeapon = Library.Create<Entity>( weapon, true );
+				player.Inventory.Add( loadoutWeapon, true );
 			}
 			i = 0;
-
 		}
+
 		[ServerCmd( "spawn" )]
 		public static void Spawn( string modelname )
 		{
@@ -114,7 +123,6 @@ namespace RPBox
 			ent.Position = tr.EndPos;
 			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
-			ent.Owner = owner;
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )
@@ -123,7 +131,37 @@ namespace RPBox
 
 				var delta = p - tr.EndPos;
 				ent.PhysicsBody.Position -= delta;
-				//DebugOverlay.Line( p, tr.EndPos, 10, false );
+				DebugOverlay.Line( p, tr.EndPos, 10, false );
+			}
+
+		}
+		[ServerCmd( "spawn_unowned" )]
+		public static void SpawnUnowned( string modelname )
+		{
+			var owner = ConsoleSystem.Caller?.Pawn;
+
+			if ( ConsoleSystem.Caller == null )
+				return;
+
+			var tr = Trace.Ray( owner.EyePos, owner.EyePos + owner.EyeRot.Forward * 500 )
+				.UseHitboxes()
+				.Ignore( owner )
+				.Size( 2 )
+				.Run();
+
+			var ent = new Prop();
+			ent.Position = tr.EndPos;
+			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
+			ent.SetModel( modelname );
+
+			// Drop to floor
+			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )
+			{
+				var p = ent.PhysicsBody.FindClosestPoint( tr.EndPos );
+
+				var delta = p - tr.EndPos;
+				ent.PhysicsBody.Position -= delta;
+				DebugOverlay.Line( p, tr.EndPos, 10, false );
 			}
 
 		}

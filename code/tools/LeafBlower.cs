@@ -34,7 +34,7 @@
 
 				if ( tr.Entity.IsWorld )
 					return;
-
+				
 				var body = tr.Body;
 
 				if ( !body.IsValid() )

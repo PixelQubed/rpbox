@@ -63,11 +63,8 @@
 				if ( !tr.Hit )
 					return;
 
-				if ( !tr.Entity.IsValid() && !(tr.Entity.Owner == this.Owner) )
-				{
-					Log.Info( "Invalid target" );
-					return; 
-				}
+				if ( !tr.Entity.IsValid() )
+					return;
 
 				CreateHitEffects( tr.EndPos );
 
@@ -82,7 +79,7 @@
 				ent.SetModel( "models/citizen_props/balloonregular01.vmdl" );
 				ent.PhysicsBody.GravityScale = -0.2f;
 				ent.RenderColor = Tint;
-
+				ent.Owner = this.Owner;
 				Tint = Color.Random.ToColor32();
 
 				if ( !useRope )
