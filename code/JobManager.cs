@@ -44,7 +44,7 @@ namespace RPBox
 			instance = this;
 			RPBoxGame.Instance.JobManager = this;
 
-			if (IsServer) {
+			if (IsServer || Local.Pawn.IsServer) {
 				var jobsJson = FileSystem.Mounted.ReadAllText("/data/jobs.json");
 				Jobs = new List<Job>();
 				Jobs = JsonSerializer.Deserialize<List<Job>>(jobsJson);
@@ -84,7 +84,7 @@ namespace RPBox
 
 			owner.Pawn.Delete();
 
-			var player = new Pawns.GamePlayer();
+			var player = new Pawns.SandboxPlayer();
 			player.Job = job;
 			owner.Pawn = player;
 
