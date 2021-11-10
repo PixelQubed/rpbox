@@ -157,7 +157,7 @@ public partial class PhysGun : Carriable
 		GrabbedPos = body.Transform.PointToLocal( tr.EndPos );
 		GrabbedBone = tr.Entity.PhysicsGroup.GetBodyIndex( body );
 
-		var client = GetClientOwner();
+		var client = Client;
 		if ( client != null )
 		{
 			client.Pvs.Add( GrabbedEntity );
@@ -310,7 +310,7 @@ public partial class PhysGun : Carriable
 			heldBody.EnableAutoSleeping = true;
 		}
 
-		var client = GetClientOwner();
+		var client = Client;
 		if ( client != null && GrabbedEntity.IsValid() )
 		{
 			client.Pvs.Remove( GrabbedEntity );

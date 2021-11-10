@@ -88,7 +88,7 @@ namespace RPBox
 
 			player.Respawn();
 
-			Log.Info(player.GetClientOwner().Name + " is now playing as " + player.Job.Name );
+			Log.Info(player.Client.Name + " is now playing as " + player.Job.Name );
 			EquipLoadoutFromJob( player );
 		}
 

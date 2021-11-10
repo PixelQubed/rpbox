@@ -33,11 +33,13 @@ namespace RPBox.UI
 		}
 		public override BaseOverhead CreateNameTag( Player player )
 		{
-			if ( player.GetClientOwner() == null )
+			if ( player.Client == null )
 				return null;
 
-			var tag = new BaseOverhead( player );
-			tag.Parent = this;
+			var tag = new BaseOverhead( player )
+			{
+				Parent = this
+			};
 			return tag;
 		}
 

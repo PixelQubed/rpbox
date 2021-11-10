@@ -12,7 +12,7 @@ public partial class BalloonEntity : Prop
 		SetModel( "models/citizen_props/balloonregular01.vmdl" );
 		SetupPhysicsFromModel( PhysicsMotionType.Dynamic, false );
 		PhysicsBody.GravityScale = GravityScale;
-		RenderColor = Color.Random.ToColor32();
+		RenderColor = Color.Random;
 	}
 
 	public override void OnKilled()
@@ -23,7 +23,7 @@ public partial class BalloonEntity : Prop
 	}
 
 	[Event.Physics.PostStep]
-	public void OnPostPhysicsStep()
+	public new void OnPostPhysicsStep()
 	{
 		if ( !this.IsValid() )
 			return;

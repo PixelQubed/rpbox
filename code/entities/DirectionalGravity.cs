@@ -42,7 +42,7 @@ public partial class DirectionalGravity : Prop
 	}
 
 	[Event.Physics.PostStep]
-	public void OnPostPhysicsStep()
+	public new void OnPostPhysicsStep()
 	{
 		if ( !IsServer )
 			return;

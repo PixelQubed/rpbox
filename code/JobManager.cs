@@ -19,7 +19,7 @@ namespace RPBox
 		{
 			Transmit = TransmitType.Always;
 
-			Log.Info("Creating Job Instance...");
+			Log.Info( "Creating Job Instance..." );
 
 			if ( IsClient )
 			{
@@ -35,7 +35,7 @@ namespace RPBox
     {
 		private static JobManager instance;
 		public static JobManager Instance { get => instance; set => instance = value; }
-		[Net, OnChangedCallback]
+		[Net, Change]
         public List<Job> Jobs { get; set; }
 
 		public JobManager()
@@ -44,7 +44,7 @@ namespace RPBox
 			instance = this;
 			RPBoxGame.Instance.JobManager = this;
 
-			if (IsServer || Local.Pawn.IsServer) {
+			if (IsServer || Local.Pawn != null && Local.Pawn.IsServer) {
 				var jobsJson = FileSystem.Mounted.ReadAllText("/data/jobs.json");
 				Jobs = new List<Job>();
 				Jobs = JsonSerializer.Deserialize<List<Job>>(jobsJson);

@@ -28,7 +28,7 @@ partial class Tool : Carriable
 
 	private void UpdateCurrentTool( Client owner )
 	{
-		var toolName = owner.GetUserString( "tool_current", "tool_boxgun" );
+		var toolName = owner.GetClientData<string>( "tool_current", "tool_boxgun" );
 		if ( toolName == null )
 			return;
 
@@ -89,7 +89,7 @@ partial class Tool : Carriable
 
 namespace Sandbox.Tools
 {
-	public partial class BaseTool : NetworkComponent
+	public partial class BaseTool : BaseNetworkable
 	{
 		public Tool Parent { get; set; }
 		public Player Owner { get; set; }

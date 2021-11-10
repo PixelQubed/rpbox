@@ -37,7 +37,9 @@ namespace RPBox.UI
 					jobsPage.AddChild(out Overview, "overview");
 					{
 						Overview.Layout.AutoColumns = true;
-						Overview.Layout.ItemSize = new Vector2(100, 100);
+						Overview.Layout.ItemWidth = 100;
+						Overview.Layout.ItemHeight = 100;
+
 						Overview.OnCreateCell = (cell, data) =>
 						{
 							var entry = (RPBox.Job)data;
@@ -45,10 +47,7 @@ namespace RPBox.UI
 
 							// This is probably trival and bad code... oh well...
 							icon.AddEventListener("onclick", () => Job = entry);
-							icon.Style.Background = new PanelBackground
-							{
-								Texture = Texture.Load( FileSystem.Data.FindFile( "images", $"{entry.Name}.png" ).GetEnumerator().Current )
-							};
+							icon.Style.BackgroundImage = Texture.Load( FileSystem.Data.FindFile( "images", $"{entry.Name}.png" ).GetEnumerator().Current );
 							var overlay = cell.Add.Panel("overlay");
 						};
 
@@ -102,10 +101,10 @@ namespace RPBox.UI
 
 		public void UpdateJobs()
 		{
-			if (JobManager.Instance is null || JobManager.Instance.Jobs is null || Overview.ChildCount == JobManager.Instance.Jobs.Count)
+			if (JobManager.Instance is null || JobManager.Instance.Jobs is null || Overview.ChildrenCount == JobManager.Instance.Jobs.Count)
 				return;
 
-			Log.Info($"Updating Jobs List... Old Job Count: {Overview.ChildCount}, New Job Count: {JobManager.Instance.Jobs.Count}");
+			Log.Info($"Updating Jobs List... Old Job Count: {Overview.ChildrenCount}, New Job Count: {JobManager.Instance.Jobs.Count}");
 
 			Overview.Clear();
 

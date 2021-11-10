@@ -21,7 +21,7 @@ namespace RPBox.Pawns
 
 		public ICamera LastCamera { get; set; }
 
-		[Net, OnChangedCallback]
+		[Net, Change]
 		public Job Job { get; set; }
 
 		public SandboxPlayer()
