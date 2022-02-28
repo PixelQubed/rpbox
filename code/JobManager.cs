@@ -73,7 +73,7 @@ namespace RPBox
 			var job = JobManager.Instance.GetJob(id);
 			if (job is null)
 			{
-				Sandbox.Log.Error($"job {id} does not exist!");
+				// Sandbox.Log.Error($"job {id} does not exist!"); // Idk why but this breaks, guessing something changed..
 				return;
 			}
 

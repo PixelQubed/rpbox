@@ -63,7 +63,7 @@ namespace RPBox
 			base.ClientDisconnect( client, reason );
 		}
 
-		[ServerCmd("change_job")]
+		/*[ServerCmd("change_job")]
 		public static void ChangeJob(int id)
 		{
 			var job = RPBoxGame.Instance.JobManager.GetJob(id);
@@ -90,7 +90,7 @@ namespace RPBox
 
 			Log.Info(player.Client.Name + " is now playing as " + player.Job.Name );
 			EquipLoadoutFromJob( player );
-		}
+		}*/
 
 		public static void EquipLoadoutFromJob( SandboxPlayer player )
 		{
@@ -113,25 +113,25 @@ namespace RPBox
 			if ( ConsoleSystem.Caller == null )
 				return;
 
-			var tr = Trace.Ray( owner.EyePos, owner.EyePos + owner.EyeRot.Forward * 500 )
+			var tr = Trace.Ray( owner.EyePosition, owner.EyePosition + owner.EyeRotation.Forward * 500 )
 				.UseHitboxes()
 				.Ignore( owner )
 				.Size( 2 )
 				.Run();
 
 			var ent = new Prop();
-			ent.Position = tr.EndPos;
-			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
+			ent.Position = tr.EndPosition;
+			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRotation.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )
 			{
-				var p = ent.PhysicsBody.FindClosestPoint( tr.EndPos );
+				var p = ent.PhysicsBody.FindClosestPoint( tr.EndPosition );
 
-				var delta = p - tr.EndPos;
+				var delta = p - tr.EndPosition;
 				ent.PhysicsBody.Position -= delta;
-				DebugOverlay.Line( p, tr.EndPos, 10, false );
+				DebugOverlay.Line( p, tr.EndPosition, 10, false );
 			}
 
 		}
@@ -143,25 +143,25 @@ namespace RPBox
 			if ( ConsoleSystem.Caller == null )
 				return;
 
-			var tr = Trace.Ray( owner.EyePos, owner.EyePos + owner.EyeRot.Forward * 500 )
+			var tr = Trace.Ray( owner.EyePosition, owner.EyePosition + owner.EyeRotation.Forward * 500 )
 				.UseHitboxes()
 				.Ignore( owner )
 				.Size( 2 )
 				.Run();
 
 			var ent = new Prop();
-			ent.Position = tr.EndPos;
-			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
+			ent.Position = tr.EndPosition;
+			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRotation.Angles().yaw, 0 ) ) * Rotation.FromAxis( Vector3.Up, 180 );
 			ent.SetModel( modelname );
 
 			// Drop to floor
 			if ( ent.PhysicsBody != null && ent.PhysicsGroup.BodyCount == 1 )
 			{
-				var p = ent.PhysicsBody.FindClosestPoint( tr.EndPos );
+				var p = ent.PhysicsBody.FindClosestPoint( tr.EndPosition );
 
-				var delta = p - tr.EndPos;
+				var delta = p - tr.EndPosition;
 				ent.PhysicsBody.Position -= delta;
-				DebugOverlay.Line( p, tr.EndPos, 10, false );
+				DebugOverlay.Line( p, tr.EndPosition, 10, false );
 			}
 
 		}
@@ -179,21 +179,21 @@ namespace RPBox
 			if ( attribute == null || !attribute.Spawnable )
 				return;
 
-			var tr = Trace.Ray( owner.EyePos, owner.EyePos + owner.EyeRot.Forward * 200 )
+			var tr = Trace.Ray( owner.EyePosition, owner.EyePosition + owner.EyeRotation.Forward * 200 )
 				.UseHitboxes()
 				.Ignore( owner )
 				.Size( 2 )
 				.Run();
 
 			var ent = Library.Create<Entity>( entName );
-			if ( ent is BaseCarriable && owner.Inventory != null )
+			if ( ent is BaseCarriable && owner.Components.Get<Inventory>() != null )
 			{
-				if ( owner.Inventory.Add( ent, true ) )
+				if ( owner.Components.Get<Inventory>().Add( ent, true ) )
 					return;
 			}
 
-			ent.Position = tr.EndPos;
-			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRot.Angles().yaw, 0 ) );
+			ent.Position = tr.EndPosition;
+			ent.Rotation = Rotation.From( new Angles( 0, owner.EyeRotation.Angles().yaw, 0 ) );
 
 			//Log.Info( $"ent: {ent}" );
 		}

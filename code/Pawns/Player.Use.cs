@@ -14,7 +14,7 @@ namespace RPBox.Pawns
 			if ( IsUseDisabled() )
 				return null;
 
-			var tr = Trace.Ray( EyePos, EyePos + EyeRot.Forward * (85 * Scale) )
+			var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * (85 * Scale) )
 				.Radius( 2 )
 				.HitLayer( CollisionLayer.Debris )
 				.Ignore( this )

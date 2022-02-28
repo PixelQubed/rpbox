@@ -12,8 +12,8 @@ namespace Sandbox.Tools
 
 			using ( Prediction.Off() )
 			{
-				var startPos = Owner.EyePos;
-				var dir = Owner.EyeRot.Forward;
+				var startPos = Owner.EyePosition;
+				var dir = Owner.EyeRotation.Forward;
 				int resizeDir = 0;
 				var reset = false;
 
@@ -28,26 +28,40 @@ namespace Sandbox.Tools
 				   .HitLayer( CollisionLayer.Debris )
 				   .Run();
 
-				if ( !tr.Hit || !tr.Entity.IsValid() || tr.Entity.PhysicsGroup == null )
+				if ( !tr.Hit || !tr.Entity.IsValid())
 					return;
 			
+				var entity = tr.Entity.Root;
+				if ( !entity.IsValid() )
+					return;
 
-				// Disable resizing lights for now
-				if ( tr.Entity is LightEntity || tr.Entity is LampEntity )
+				if ( entity.PhysicsGroup == null )
 					return;
 
 				var scale = reset ? 1.0f : Math.Clamp( tr.Entity.Scale + ((0.5f * Time.Delta) * resizeDir), 0.4f, 4.0f );
 
-				if ( tr.Entity.Scale != scale )
+				if ( entity.Scale != scale )
 				{
 					tr.Entity.Scale = scale;
 					tr.Entity.PhysicsGroup.RebuildMass();
-					tr.Entity.PhysicsGroup.Wake();
+					tr.Entity.PhysicsGroup.Sleeping = false;
+
+					foreach ( var child in entity.Children )
+					{
+						if ( !child.IsValid() )
+							continue;
+
+						if ( child.PhysicsGroup != null )
+							continue;
+
+						child.PhysicsGroup.RebuildMass();
+						child.PhysicsGroup.Sleeping = false;
+					}
 				}
 
 				if ( Input.Pressed( InputButton.Attack1 ) || Input.Pressed( InputButton.Attack2 ) || reset )
 				{
-					CreateHitEffects( tr.EndPos );
+					CreateHitEffects( tr.EndPosition );
 				}
 			}
 		}

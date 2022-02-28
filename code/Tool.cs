@@ -81,9 +81,17 @@ partial class Tool : Carriable
 	[Event.Frame]
 	public void OnFrame()
 	{
-		if ( !IsActiveChild() ) return;
+		if ( Owner is Player player && player.ActiveChild != this )
+			return;
 
 		CurrentTool?.OnFrame();
+	}
+
+	public override void SimulateAnimator( PawnAnimator anim )
+	{
+		anim.SetAnimParameter( "holdtype", 1 );
+		anim.SetAnimParameter( "aim_body_weight", 1.0f );
+		anim.SetAnimParameter( "holdtype_handedness", 1 );
 	}
 }
 

@@ -38,7 +38,7 @@ public partial class DroneEntity : Prop
 	}
 
 	[Event.Physics.PostStep]
-	public new void OnPostPhysicsStep()
+	public void ApplyForces()
 	{
 		if ( !PhysicsBody.IsValid() )
 		{

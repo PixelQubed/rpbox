@@ -11,7 +11,7 @@ public partial class ThrusterEntity : Prop, IUse
 	public bool Enabled { get; set; } = true;
 
 	[Event.Physics.PostStep]
-	public new virtual void OnPostPhysicsStep()
+	public void ApplyForces()
 	{
 		if ( IsServer && Enabled )
 		{

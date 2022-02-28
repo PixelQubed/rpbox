@@ -34,8 +34,8 @@
 				if ( !Input.Pressed( InputButton.Attack1 ) )
 					return;
 
-				var startPos = Owner.EyePos;
-				var dir = Owner.EyeRot.Forward;
+				var startPos = Owner.EyePosition;
+				var dir = Owner.EyeRotation.Forward;
 
 				var tr = Trace.Ray( startPos, startPos + dir * MaxTraceDistance )
 					.Ignore( Owner )
@@ -47,12 +47,12 @@
 				if ( !tr.Entity.IsValid() )
 					return;
 
-				var attached = !tr.Entity.IsWorld && tr.Body.IsValid() && tr.Body.PhysicsGroup != null && tr.Body.Entity.IsValid();
+				var attached = !tr.Entity.IsWorld && tr.Body.IsValid() && tr.Body.PhysicsGroup != null && tr.Body.GetEntity().IsValid();
 
 				if ( attached && tr.Entity is not Prop )
 					return;
 
-				CreateHitEffects( tr.EndPos );
+				CreateHitEffects( tr.EndPosition );
 
 				if ( tr.Entity is WheelEntity )
 				{
@@ -63,7 +63,7 @@
 
 				var ent = new WheelEntity
 				{
-					Position = tr.EndPos,
+					Position = tr.EndPosition,
 					Rotation = Rotation.LookAt( tr.Normal ) * Rotation.From( new Angles( 0, 90, 0 ) ),
 				};
 
@@ -71,12 +71,7 @@
 				
 				ent.Owner = this.Owner;
 				ent.PhysicsBody.Mass = tr.Body.Mass;
-				ent.Joint = PhysicsJoint.Revolute
-					.From( ent.PhysicsBody )
-					.To( tr.Body )
-					.WithPivot( tr.EndPos )
-					.WithBasis( Rotation.LookAt( tr.Normal ) * Rotation.From( new Angles( 90, 0, 0 ) ) )
-					.Create();
+				ent.Joint = PhysicsJoint.CreateHinge( ent.PhysicsBody, tr.Body, tr.EndPosition, tr.Normal );
 			}
 		}
 	}

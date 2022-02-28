@@ -13,13 +13,10 @@ namespace RPBox.Pawns
 
 		private DamageInfo lastDamage;
 
-		[Net] public PawnController VehicleController { get; set; }
-		[Net] public PawnAnimator VehicleAnimator { get; set; }
-		[Net] public ICamera VehicleCamera { get; set; }
-		[Net] public Entity Vehicle { get; set; }
-		[Net] public ICamera MainCamera { get; set; }
-
-		public ICamera LastCamera { get; set; }
+		/// <summary>
+		/// The clothing container is what dresses the citizen
+		/// </summary>
+		public Clothing.Container Clothing = new();
 
 		[Net, Change]
 		public Job Job { get; set; }
@@ -29,14 +26,6 @@ namespace RPBox.Pawns
 			Inventory = new Inventory( this );
 		}
 
-		public override void Spawn()
-		{
-			MainCamera = new FirstPersonCamera();
-			LastCamera = MainCamera;
-
-			base.Spawn();
-		}
-
 		public override void Respawn()
 		{
 			SetModel( "models/citizen/citizen.vmdl" );
@@ -44,8 +33,6 @@ namespace RPBox.Pawns
 			Controller = new WalkController();
 			Animator = new StandardPlayerAnimator();
 
-			MainCamera = LastCamera;
-			Camera = MainCamera;
 
 			if ( DevController is NoclipController )
 			{
@@ -57,13 +44,15 @@ namespace RPBox.Pawns
 			EnableHideInFirstPerson = true;
 			EnableShadowInFirstPerson = true;
 
-			Dress();
+			Clothing.DressEntity( this );
 
 			Inventory.Add( new PhysGun(), true );
 			Inventory.Add( new GravGun() );
 			Inventory.Add( new Tool() );
 			//Inventory.Add( new Pistol() );
 			//Inventory.Add( new Flashlight() );
+
+			CameraMode = new FirstPersonCamera();
 
 			base.Respawn();
 		}
@@ -79,15 +68,8 @@ namespace RPBox.Pawns
 				PlaySound( "kersplat" );
 			}
 
-			VehicleController = null;
-			VehicleAnimator = null;
-			VehicleCamera = null;
-			Vehicle = null;
-
 			BecomeRagdollOnClient( Velocity, lastDamage.Flags, lastDamage.Position, lastDamage.Force, GetHitboxBone( lastDamage.HitboxIndex ) );
-			LastCamera = MainCamera;
-			MainCamera = new SpectateRagdollCamera();
-			Camera = MainCamera;
+
 			Controller = null;
 
 			EnableAllCollisions = false;
@@ -118,24 +100,9 @@ namespace RPBox.Pawns
 
 		public override PawnController GetActiveController()
 		{
-			if ( VehicleController != null ) return VehicleController;
 			if ( DevController != null ) return DevController;
 
 			return base.GetActiveController();
-		}
-
-		public override PawnAnimator GetActiveAnimator()
-		{
-			if ( VehicleAnimator != null ) return VehicleAnimator;
-
-			return base.GetActiveAnimator();
-		}
-
-		public ICamera GetActiveCamera()
-		{
-			if ( VehicleCamera != null ) return VehicleCamera;
-
-			return MainCamera;
 		}
 
 		public override void Simulate( Client cl )
@@ -150,11 +117,6 @@ namespace RPBox.Pawns
 			if ( LifeState != LifeState.Alive )
 				return;
 
-			if ( VehicleController != null && DevController is NoclipController )
-			{
-				DevController = null;
-			}
-
 			var controller = GetActiveController();
 			if ( controller != null )
 				EnableSolidCollisions = !controller.HasTag( "noclip" );
@@ -164,24 +126,22 @@ namespace RPBox.Pawns
 
 			if ( Input.Pressed( InputButton.View ) )
 			{
-				if ( MainCamera is not FirstPersonCamera )
+				if ( CameraMode is ThirdPersonCamera )
 				{
-					MainCamera = new FirstPersonCamera();
+					CameraMode = new FirstPersonCamera();
 				}
 				else
 				{
-					MainCamera = new ThirdPersonCamera();
+					CameraMode = new ThirdPersonCamera();
 				}
 			}
-
-			Camera = GetActiveCamera();
 
 			if ( Input.Pressed( InputButton.Drop ) )
 			{
 				var dropped = Inventory.DropActive();
 				if ( dropped != null )
 				{
-					dropped.PhysicsGroup.ApplyImpulse( Velocity + EyeRot.Forward * 500.0f + Vector3.Up * 100.0f, true );
+					dropped.PhysicsGroup.ApplyImpulse( Velocity + EyeRotation.Forward * 500.0f + Vector3.Up * 100.0f, true );
 					dropped.PhysicsGroup.ApplyAngularImpulse( Vector3.Random * 100.0f, true );
 
 					timeSinceDropped = 0;
@@ -233,7 +193,7 @@ namespace RPBox.Pawns
 		[ServerCmd( "inventory_current" )]
 		public static void SetInventoryCurrent( string entName )
 		{
-			var target = ConsoleSystem.Caller.Pawn;
+			var target = ConsoleSystem.Caller.Pawn as Player;
 			if ( target == null ) return;
 
 			var inventory = target.Inventory;
@@ -254,11 +214,11 @@ namespace RPBox.Pawns
 				break;
 			}
 		}
-		private void OnJobChanged()
+		private void OnJobChanged(Job oldJob, Job newJob)
 		{
-			if ( Job != null )
+			if ( newJob != null )
 			{
-				UI.Job.Instance.UpdateJobText( Job.Name );
+				UI.Job.Instance.UpdateJobText( newJob.Name );
 			}
 		}
 

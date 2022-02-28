@@ -37,13 +37,16 @@ partial class Inventory : BaseInventory
 
 	public override bool Drop( Entity ent )
 	{
+
 		if ( !Host.IsServer )
 			return false;
 
 		if ( !Contains( ent ) )
 			return false;
-
-		ent.OnCarryDrop( Owner );
+		if ( ent is BaseCarriable bc)
+		{
+			bc.OnCarryDrop( Owner );
+		}
 
 		return ent.Parent == null;
 	}
